@@ -5,7 +5,7 @@ const currentProccess = process.env.NODE_ENV;
 
 const axios = a.create({
 	baseURL:
-		currentProccess === "production" ? "https://ecoleaf.today/api" : apiUrl,
+		currentProccess === "production" ? "https://api.ecoleaf.app" : apiUrl,
 });
 
 export default axios;

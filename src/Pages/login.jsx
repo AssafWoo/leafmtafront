@@ -44,17 +44,30 @@ const Login = () => {
 				email: getValues("email"),
 				password: getValues("password"),
 			});
+			
 			const realRes = data.data;
-			const accessToken = realRes.accessKey;
-			toastIdRef.current = toast({
-				title: `So good to see you again!`,
-				description: "",
-				status: "success",
-				duration: 3000,
-				isClosable: true,
-			});
 			setLoader(false);
-			userDispatch(loginUser(accessToken));
+			setIsDisabled(false);
+			if(!realRes) {
+				toastIdRef.current = toast({
+					title: 'Error',
+					description: 'Username / Password is incorrect, please recheck.',
+					status: "error",
+					duration: 3000,
+					isClosable: true,
+				});
+			} else {
+				const accessToken = realRes.accessKey;
+				toastIdRef.current = toast({
+					title: `So good to see you again!`,
+					description: "",
+					status: "success",
+					duration: 3000,
+					isClosable: true,
+				});
+				userDispatch(loginUser(accessToken));
+			}
+
 		} catch (e) {
 			setLoader(false);
 			setIsDisabled(false);
