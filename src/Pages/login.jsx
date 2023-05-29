@@ -36,53 +36,69 @@ const Login = () => {
 	const handleLogin = async () => {
 		setLoader(true);
 		if (toastIdRef.current) {
-			toast.close(toastIdRef.current);
+		  toast.close(toastIdRef.current);
 		}
 		setIsDisabled(true);
 		try {
-			const data = await axios.post(`/login`, {
-				email: getValues("email"),
-				password: getValues("password"),
-			});
-			
-			const realRes = data.data;
-			setLoader(false);
-			setIsDisabled(false);
-			if(!realRes) {
-				toastIdRef.current = toast({
-					title: 'Error',
-					description: 'Username / Password is incorrect, please recheck.',
-					status: "error",
-					duration: 3000,
-					isClosable: true,
-				});
-			} else {
-				const accessToken = realRes.accessKey;
-				toastIdRef.current = toast({
-					title: `So good to see you again!`,
-					description: "",
-					status: "success",
-					duration: 3000,
-					isClosable: true,
-				});
-				userDispatch(loginUser(accessToken));
-			}
-
-		} catch (e) {
-			setLoader(false);
-			setIsDisabled(false);
-			let header = e.name;
-			let message = e.message;
-			reset({ ...getValues(), error: e });
+		  const response = await axios.post(`/login`, {
+			email: getValues("email"),
+			password: getValues("password"),
+		  });
+		  const realRes = response.data;
+		  setLoader(false);
+		  setIsDisabled(false);
+		  if (!realRes) {
 			toastIdRef.current = toast({
-				title: header,
-				description: message.includes("401") ? "User doesn't exists" : message,
-				status: "error",
-				duration: 3000,
-				isClosable: true,
+			  title: 'Error',
+			  description: 'Username / Password is incorrect, please recheck.',
+			  status: "error",
+			  duration: 3000,
+			  isClosable: true,
 			});
+		  } else {
+			const accessToken = realRes.accessKey;
+			toastIdRef.current = toast({
+			  title: `So good to see you again!`,
+			  description: "",
+			  status: "success",
+			  duration: 3000,
+			  isClosable: true,
+			});
+			userDispatch(loginUser(accessToken));
+		  }
+		} catch (error) {
+		  console.error(error);
+		  setLoader(false);
+		  setIsDisabled(false);
+		  let header = 'Error';
+		  let message = 'An error occurred during login.';
+		  if (error.response) {
+			// If the error has a response, handle the error based on the status code
+			const { status, data } = error.response;
+			if (status === 401) {
+			  message = 'Username / Password is incorrect'
+			} else if (status === 500) {
+			  message = 'Internal server error.';
+			} else if (data && data.message) {
+			  // Check if the error response has a custom message
+			  message = data.message;
+			}
+		  } else if (error.message) {
+			// If the error has a message, use it as the error description
+			message = error.message;
+		  }
+		  reset({ ...getValues(), error: error });
+		  toastIdRef.current = toast({
+			title: header,
+			description: message,
+			status: "error",
+			duration: 3000,
+			isClosable: true,
+		  });
 		}
-	};
+	  };
+	  
+	  
 	return (
 		<form onSubmit={handleSubmit(() => handleLogin())}>
 			<BreakLine />
