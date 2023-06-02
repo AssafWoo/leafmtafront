@@ -17,7 +17,7 @@ import { BigButton, SmallButton } from "./style";
 import { FaCheck, FaStar } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { Tooltip } from "@chakra-ui/react";
-import { BreakLine, Flex, Parag } from "../../../Styles/styles";
+import { BreakLine, Flex, LittleBreakLine, Parag } from "../../../Styles/styles";
 import { isObjEmpty } from "../../../Utils/isObjEmpty";
 import ModalWindow from "../../Modal/modal_window";
 import Social from "../../Social/Social";
@@ -48,7 +48,7 @@ const OffsetCard = ({
   const cutDesc = (desc) => {
     return desc.substring(0, 200) + "...";
   };
-
+  console.log(item.description)
   return (
     <>
       {!isObjEmpty(currProject) && (
@@ -209,45 +209,36 @@ const OffsetCard = ({
                 >
                   {item.allowed_for_merchant}
                 </Badge>
-                <Badge
-                  borderRadius="15px"
-                  px="2"
-                  colorScheme="blue"
-                  bg={MainBlue}
-                  marginRight=".2rem"
-                  color={White}
-                >
-                  {item.offset_type}
-                </Badge>
               </Box>
               <Heading
                 color={DarkerTheme}
-                padding=".5rem"
+                padding="0rem .5rem "
                 fontWeight="600"
-                height="3rem"
                 fontSize="1.3rem"
                 textAlign="left"
+                display="block"
               >
                 {item.name}
               </Heading>
-              <BreakLine />
+              <LittleBreakLine />
               <Parag
-                style={{ padding: ".5rem", color: MainGrey, fontSize: "1rem" }}
+                style={{ padding: ".5rem", color: MainGrey, fontSize: "1rem", display:'block' }}
               >
                 {item.country}
               </Parag>
               <Parag
                 style={{ padding: ".5rem", color: MainGrey, fontSize: "1rem" }}
               >
-                {item.offset_verifier}
+                {item.offset_verifier} / {item.offset_type} Type
               </Parag>
               <hr />
               <Parag
                 style={{ padding: ".5rem", fontSize: ".9rem" }}
                 color="black"
               >
-                {cutDesc(item.description)}
+                {cutDesc(item.description).replace(/\n/g, "")}
               </Parag>
+
               <BreakLine />
               {!justDisplay ? (
                 <>

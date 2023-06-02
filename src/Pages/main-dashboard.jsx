@@ -11,7 +11,6 @@ import { MainGreen } from "../Styles/colors";
 import { TransactionManipulation } from "../Utils/dataManipulation/transactionManipulation";
 import NotFound from "../Components/NotFound/not-found";
 import DashboardContent from "../Modules/dashboard/dashboard-content";
-import { getMostFrequentOffsetUuid, getProjectByUuid } from "../Utils/getFavoriteProject";
 
 const Dashboard = () => {
 	const { transactionsState, transactionsDispatch, userDispatch } =

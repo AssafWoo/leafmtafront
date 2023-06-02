@@ -51,7 +51,7 @@ const AccountDetails = ({ accountDetails }) => {
       <Flex>
         <BoxSize isInvisible={false} flexSize="5">
           <Parag color="black">
-            In order to change password, please sent us an email and we'll get
+            In order to change password, please send us an email and we will get
             back to you.
           </Parag>
           <BreakLine />

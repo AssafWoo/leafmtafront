@@ -19,7 +19,6 @@ export const extractFavorite = (data) => {
 
 
 export const findProjectByName = (chosenProjectName, projectsArray) => {
-    console.log(chosenProjectName, projectsArray)
     return projectsArray.find((projects) => projects.name === chosenProjectName);
 }
 

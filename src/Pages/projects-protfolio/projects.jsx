@@ -22,8 +22,10 @@ import {
   getMostFrequentOffsetUuid,
   getProjectByUuid,
 } from "../../Utils/getFavoriteProject";
+import { useScreenSize } from "../../Utils/useScreenSize";
 
 const ProjectsMarketplace = () => {
+  const size = useScreenSize();
   const [projects, setProjects] = useState([]);
   const [favoriteData, setFavoriteData] = useState([]);
   const [error, setError] = useState(false);
@@ -88,16 +90,22 @@ const ProjectsMarketplace = () => {
     return favorites;
   };
 
-  const addFavorite = useCallback(async (project) => {
-    setFavoriteData([...favoriteData, project]);
-  }, [favoriteData]);
+  const addFavorite = useCallback(
+    async (project) => {
+      setFavoriteData([...favoriteData, project]);
+    },
+    [favoriteData]
+  );
 
-  const removeFavorite = useCallback(async (project) => {
-    const newFavoriteArray = favoriteData?.filter(
-      (item) => item.uuid !== project.uuid
-    );
-    setFavoriteData(newFavoriteArray);
-  }, [favoriteData]);
+  const removeFavorite = useCallback(
+    async (project) => {
+      const newFavoriteArray = favoriteData?.filter(
+        (item) => item.uuid !== project.uuid
+      );
+      setFavoriteData(newFavoriteArray);
+    },
+    [favoriteData]
+  );
 
   const successToast = () => {
     toastIdRef.current = toast({
@@ -136,7 +144,6 @@ const ProjectsMarketplace = () => {
       setMostCommonProject({ ...mostPopularOffset });
     }
   }, [transactions, favoriteData]);
-
   return (
     <Flex>
       <Heading {...SubHeader}>
@@ -156,14 +163,21 @@ const ProjectsMarketplace = () => {
           </Parag>
         </BoxSize>
       </Flex>
-      <BoxSize
-        isInvisible={true}
-        style={{ textAlign: "right", paddingLeft: "0" }}
-      >
-        <Button colorScheme="blue" bg={LightBlue} onClick={() => saveChanges()}>
-          Save changes
-        </Button>
-      </BoxSize>
+      {(size === "fullscreen" ||
+        size === "1-cols") && (
+          <BoxSize
+            isInvisible={true}
+            style={{ textAlign: "right", paddingLeft: "0" }}
+          >
+            <Button
+              colorScheme="blue"
+              bg={LightBlue}
+              onClick={() => saveChanges()}
+            >
+              Save changes
+            </Button>
+          </BoxSize>
+        )}
       {loader && (
         <Flex
           style={{
@@ -188,7 +202,7 @@ const ProjectsMarketplace = () => {
             {loader ? (
               ""
             ) : (
-              <Flex style={{ marginBottom: "3rem" }}>
+              <Flex>
                 {projects.map((item) => (
                   <OffsetCard
                     type="offset"
@@ -202,6 +216,22 @@ const ProjectsMarketplace = () => {
                 ))}
               </Flex>
             )}
+            <BoxSize
+              isInvisible={true}
+              style={{
+                textAlign: "right",
+                paddingLeft: "0",
+                marginBottom: "3rem",
+              }}
+            >
+              <Button
+                colorScheme="blue"
+                bg={LightBlue}
+                onClick={() => saveChanges()}
+              >
+                Save changes
+              </Button>
+            </BoxSize>
           </>
         )
       )}

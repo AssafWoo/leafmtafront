@@ -17,11 +17,16 @@ import {
   findProjectByName,
   validateEssentials,
 } from "./utils";
+import { listToObject } from "../../../Utils/dataManipulation/listToObject";
+import { useScreenSize } from "../../../Utils/useScreenSize";
 
 const Flights = () => {
+  const size = useScreenSize();
   const [error, setError] = useState(false);
   const [projects, setProjects] = useState([]);
-  const favoriteProjects = useRef([]);
+  const [favoriteProjects, setFavoriteProjects] = useState([]);
+  const chosenProject =  useRef("");
+  const projectsObject = useRef({});
   const [loader, setLoader] = useState(false);
   const [paymentProcessing, setPaymentProcessing] = useState(false); // indicates if to show spinner
   const [clear, setClear] = useState(false); // indicates if should clear the autocomplete
@@ -42,7 +47,7 @@ const Flights = () => {
     },
   });
 
-  const getOffsets = async (didFail) => {
+  const getOffsets = useCallback(async (didFail) => {
     if (didFail) setLoader(true);
     setError(false);
     try {
@@ -50,13 +55,15 @@ const Flights = () => {
       const favProjects = extractFavorite(res);
       setProjects(res);
       reset({ ...getValues(), project: favProjects[0].name });
-      favoriteProjects.current = [...favProjects];
+      chosenProject.current = favProjects[0].name;
+      setFavoriteProjects([...favProjects]);
+      projectsObject.current = listToObject([...favProjects]);
       setLoader(false);
     } catch (e) {
       setError(true);
       setLoader(false);
     }
-  };
+  },[]);
 
   useEffect(() => {
     getOffsets();
@@ -71,10 +78,7 @@ const Flights = () => {
     if (validInputs) {
       setLoader(true);
       setError(false);
-      const chosenProject = findProjectByName(
-        getValues("project"),
-        favoriteProjects.current
-      );
+      const projectUUID = projectsObject.current[chosenProject.current];  
       try {
         const res = await fetchData(
           "/estimate",
@@ -84,7 +88,7 @@ const Flights = () => {
             passengers: getValues("numberOfPassengers"),
             journeys: getValues("journyes"),
             roundTrip: getValues("roundTrip"),
-            project: chosenProject.uuid,
+            project: projectUUID,
           },
           "POST"
         );
@@ -115,10 +119,7 @@ const Flights = () => {
     async (data) => {
       setOpenPaymentModal(false);
       try {
-        const chosenProject = findProjectByName(
-          getValues("project"),
-          favoriteProjects.current
-        );
+        const projectUUID = projectsObject.current[chosenProject.current];  
         const res = await fetchData(
           "/transactions",
           {
@@ -127,7 +128,7 @@ const Flights = () => {
             passengers: getValues("numberOfPassengers"),
             roundtrip: getValues("roundTrip"),
             journeys: getValues("journyes"),
-            project: chosenProject.uuid,
+            project: projectUUID,
           },
           "POST"
         );
@@ -210,7 +211,7 @@ const Flights = () => {
     (getValues("totalAmount") / 1000).toFixed(2),
     getValues("totalPrice")
   );
-  const stateFieldsData = stateFields(handleDebounce, handleAutoComplete);
+  const stateFieldsData = stateFields(handleDebounce, handleAutoComplete, size);
 
   const resetTransactionStatus = useCallback(() => {
     setTransactionStatus(null);
@@ -302,8 +303,8 @@ const Flights = () => {
                           id={section.name}
                           name={section.name}
                           value={getValues(section.name)}
-                          onChange={(e) => {
-                            console.log(e.target.value);
+                          onChange={(e) => { 
+                            chosenProject.current = e.target.value                     
                             reset({
                               ...getValues(),
                               [section.name]: e.target.value,
@@ -316,8 +317,8 @@ const Flights = () => {
                           }}
                           control={control}
                         >
-                          {favoriteProjects.current &&
-                            favoriteProjects.current.map((offset) => (
+                          {favoriteProjects &&
+                            favoriteProjects.map((offset) => (
                               <Option
                                 uuid={offset.uuid}
                                 option={offset.name}

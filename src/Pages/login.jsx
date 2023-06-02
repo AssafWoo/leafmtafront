@@ -67,7 +67,6 @@ const Login = () => {
 			userDispatch(loginUser(accessToken));
 		  }
 		} catch (error) {
-		  console.error(error);
 		  setLoader(false);
 		  setIsDisabled(false);
 		  let header = 'Error';

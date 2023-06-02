@@ -75,7 +75,7 @@ const Settings = () => {
                   Company Settings
                 </Tab>
                 <Tab index={1} _selected={tabsStyle} color={DarkerTheme}>
-                  Account Settings
+                  User Settings
                 </Tab>
               </TabList>
               <TabPanels>

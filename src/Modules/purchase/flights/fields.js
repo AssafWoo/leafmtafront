@@ -11,12 +11,12 @@ export const orderSummaryFields = (totalAmount, totalPrice) => {
 	];
 };
 
-export const stateFields = (handleDebounce, handleAutoCompleteSelect) => {
+export const stateFields = (handleDebounce, handleAutoCompleteSelect, size) => {
 	return [
 		{
 			name: "origin",
 			type: "autoComplete",
-			flexWidth: "2 0 40%",
+			flexWidth: size === "fullscreen" || size === "1-cols" ? "2 0 100%" : "2 0 40%",
 			width: "100%",
 			placeholder: "Flight's origin airport",
 			func: handleAutoCompleteSelect,
@@ -34,7 +34,7 @@ export const stateFields = (handleDebounce, handleAutoCompleteSelect) => {
 		{
 			name: "destination",
 			type: "autoComplete",
-			flexWidth: "2 0 40%",
+			flexWidth: size === "fullscreen" || size === "1-cols" ? "2 0 100%" :"2 0 40%",
 			width: "100%",
 			placeholder: "Flight's destination airport",
 			func: handleAutoCompleteSelect,

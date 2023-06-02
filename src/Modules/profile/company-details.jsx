@@ -69,7 +69,7 @@ const CompanyDetails = ({companyDetails}) => {
 						textAlign="left"
 						fontWeight="600"
 					>
-						Emissions certificates will be send to your email.
+						Emissions certificates will be sent to your email.
 					</Heading>
 				</BoxSize>
 			</Flex>
