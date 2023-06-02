@@ -11,6 +11,7 @@ import {
   White,
   MainPink,
   MainPurple,
+  MainOrange,
 } from "../../../Styles/colors";
 import { useScreenSize } from "../../../Utils/useScreenSize";
 import { BigButton, SmallButton } from "./style";
@@ -173,11 +174,11 @@ const OffsetCard = ({
                       colorScheme="blue"
                       borderRadius="15px"
                       style={{
-                        background: LightBlue,
+                        background: MainOrange,
                         padding: "6px 12px",
                         color: White,
                       }}
-                      label="Save changes to update"
+                      label="To update your selected projects, please save the changes."
                       placement="bottom"
                     >
                       <Badge
@@ -185,15 +186,16 @@ const OffsetCard = ({
                         borderRadius="15px"
                         px="1"
                         py="1"
+                        margin=".5rem 0rem"
+                        padding=".5rem"
                         color={White}
                         cursor="pointer"
                         colorScheme="blue"
                         fontWeight="600"
-                        bg={LightBlue}
-                        marginRight=".2rem"
+                        bg={MainOrange}
                       >
                         {" "}
-                        pending...
+                        Please save your changes
                       </Badge>
                     </Tooltip>
                   </>

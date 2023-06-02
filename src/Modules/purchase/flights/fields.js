@@ -20,14 +20,14 @@ export const stateFields = (handleDebounce, handleAutoCompleteSelect, size) => {
 			width: "100%",
 			placeholder: "Flight's origin airport",
 			func: handleAutoCompleteSelect,
-			boxHeader: "Origin",
+			boxHeader: "Origin Airport",
 			sideParag: null,
 			toolTip: (
 				<StyledToolTip
 					background={LightTheme}
 					color={DarkerTheme}
 					iconColor={Blue600}
-					content={"Departure airport code"}
+					content={"Please enter the airport code of your origin. For example, JFK."}
 				/>
 			),
 		},
@@ -38,14 +38,14 @@ export const stateFields = (handleDebounce, handleAutoCompleteSelect, size) => {
 			width: "100%",
 			placeholder: "Flight's destination airport",
 			func: handleAutoCompleteSelect,
-			boxHeader: "Destination",
+			boxHeader: "Destination Airport",
 			sideParag: null,
 			toolTip: (
 				<StyledToolTip
 					background={LightTheme}
 					color={DarkerTheme}
 					iconColor={Blue600}
-					content={"Landing airport code"}
+					content={"Please enter the airport code of your destination. For example, JFK."}
 				/>
 			),
 		},

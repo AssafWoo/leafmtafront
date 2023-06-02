@@ -147,7 +147,7 @@ const ProjectsMarketplace = () => {
   return (
     <Flex>
       <Heading {...SubHeader}>
-        Projects{" "}
+        Project Catalog{" "}
         <FaInfoCircle
           style={{ display: "inline-block", color: Blue600, cursor: "pointer" }}
           size={"1.1rem"}

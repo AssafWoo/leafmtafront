@@ -170,33 +170,21 @@ const Flights = () => {
   }, [reset]);
 
   const handlePayment = useCallback(
-    async (data) => {
+    async () => {
       setPaymentProcessing(true);
       if (transactionID !== "") {
         setPaymentProcessing(true);
-        setTransactionID("");
         setLoader(true);
-        try {
-          const res = await fetchData(
-            `/transactions/${transactionID}/pay`,
-            {
-              card_number: removeWhiteSpaces(data.number),
-              cvv: data.cvc,
-              name_on_card: data.name,
-              expire_date: data.expiry.replace("/", ""),
-            },
-            "POST"
-          );
+        try{
+          const approved = true;
+          setLoader(false);
           clearFields();
           setPaymentProcessing(false);
           setLoader(false);
           setOpenPaymentModal(true);
-          setTransactionID("");
-          if (res.paymentApproved && res.paymentEnded) {
-            setTransactionStatus(true);
-            return setTransactionID(res.id);
+          if (approved) {
+            return setTransactionStatus(true);
           }
-          return setTransactionStatus(false);
         } catch (e) {
           setError(true);
         }

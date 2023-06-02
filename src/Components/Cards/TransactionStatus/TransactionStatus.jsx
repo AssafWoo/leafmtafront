@@ -17,10 +17,7 @@ const TransactionStatus = ({ transaction, user, status }) => {
 				</Parag>
 				{status ? (
 					<Parag color="black" align="center">
-						Awesome! thank you for your purchase, you made a difference
-						<br />
-						You'll be getting an email to the email you registerd with soon with
-						your certification.
+						Thank you for your purchase! <br />Your support has made a significant impact. An email will be sent to the registered email address shortly, containing your certification.
 					</Parag>
 				) : (
 					<Parag color="black" align="center">

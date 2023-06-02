@@ -22,6 +22,11 @@ export const IconStyle = {
 
 export const MenuNames = [
   {
+    name: "Projects",
+    link: "/projects",
+    icon: <FaTree style={IconStyle} />,
+  },
+  {
     name: "Purchase",
     link: "/self-purchase",
     icon: (
@@ -29,12 +34,6 @@ export const MenuNames = [
         style={{ margin: "auto", display: "inline", marginInlineEnd: ".3rem" }}
       />
     ),
-  },
-
-  {
-    name: "Projects",
-    link: "/projects",
-    icon: <FaTree style={IconStyle} />,
   },
 
   {
