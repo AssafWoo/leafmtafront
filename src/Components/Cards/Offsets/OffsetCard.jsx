@@ -48,7 +48,6 @@ const OffsetCard = ({
   const cutDesc = (desc) => {
     return desc.substring(0, 200) + "...";
   };
-  console.log(item.description)
   return (
     <>
       {!isObjEmpty(currProject) && (

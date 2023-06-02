@@ -6,8 +6,8 @@ const validateEmail = (email) => {
 
 export const validateForm = (data) => {
 	let valid = [];
-	if (data.name.length === 0 || data.name.length <= 3) {
-		valid.push("Name must be longer than 3 letters.");
+	if (data.name.length === 0 || data.name.length <= 1) {
+		valid.push("Name must be longer than 1 letter.");
 	}
 	if (data.password.length < 6) {
 		valid.push("Password must be at least 6 letters.");

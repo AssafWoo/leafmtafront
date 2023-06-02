@@ -52,12 +52,19 @@ const Flights = () => {
     setError(false);
     try {
       const res = await fetchData(`/offsets`);
-      const favProjects = extractFavorite(res);
-      setProjects(res);
-      reset({ ...getValues(), project: favProjects[0].name });
-      chosenProject.current = favProjects[0].name;
-      setFavoriteProjects([...favProjects]);
-      projectsObject.current = listToObject([...favProjects]);
+      const favProjects = extractFavorite([...res]);
+      setProjects([...res]);
+      if(favProjects.length === 0) {
+        reset({ ...getValues(), project: res[0].name });
+        chosenProject.current = res[0].name;
+        setFavoriteProjects([...res]);
+        projectsObject.current = listToObject([...res]);
+      } else {
+        reset({ ...getValues(), project: favProjects[0].name });
+        chosenProject.current = favProjects[0].name;
+        setFavoriteProjects([...favProjects]);
+        projectsObject.current = listToObject([...favProjects]);
+      }
       setLoader(false);
     } catch (e) {
       setError(true);

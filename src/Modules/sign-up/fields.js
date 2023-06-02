@@ -25,6 +25,6 @@ export const inputNames = [
 		id: "password",
 		required: true,
 		type: "password",
-		message: "Must be longer then 3 characters",
+		message: "Must be longer then 6 characters",
 	},
 ];

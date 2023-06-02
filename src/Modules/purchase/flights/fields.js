@@ -105,7 +105,7 @@ export const stateFields = (handleDebounce, handleAutoCompleteSelect, size) => {
 					color={DarkerTheme}
 					iconColor={Blue600}
 					content={
-						"Choose which project you would like us to transfer the money to"
+						"You must choose projects before you can purchase credits"
 					}
 				/>
 			),
