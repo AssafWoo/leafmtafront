@@ -56,7 +56,6 @@ const Settings = () => {
     }
     getUserData();
   }, [userData.userName]);
-
   return (
     <Flex>
       <Heading {...SubHeader}>Your Profile</Heading>
