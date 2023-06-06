@@ -270,7 +270,7 @@ const Flights = () => {
                           onChange={(e) => {
                             reset({
                               ...getValues(),
-                              [section.name]: e.target.value,
+                              [section.name]: e.target.checked,
                             });
                             getPaymentAmount();
                           }}
